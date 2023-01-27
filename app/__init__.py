@@ -17,13 +17,17 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
         "SQLALCHEMY_DATABASE_URI")
 
-    # Import models here for Alembic setup
-    # from app.models.ExampleModel import ExampleModel
+    
 
     
 
     db.init_app(app)
     migrate.init_app(app, db)
+
+    # Import models here for Alembic setup
+    # from app.models.ExampleModel import ExampleModel
+    from app.models.Event import Event
+    from app.models.Pet import Pet
 
     # Register Blueprints here
     # from .routes import example_bp
