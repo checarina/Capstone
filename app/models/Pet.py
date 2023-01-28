@@ -25,3 +25,17 @@ class Pet(db.Model):
             events = pet_data["events"]
         )
         return new_pet
+    
+    def to_dict(self):
+        pet_dict = {}
+        pet_dict["id"] = self.id
+        pet_dict["name"] = self.name
+        pet_dict["species"] = self.species
+        pet_dict["breed"] = self.breed
+        pet_dict["sex"] = self.sex
+        pet_dict["age"] = self.age
+        pet_dict["pic"] = self.pic
+        pet_dict["details"] = self.details
+        pet_dict["events"] = self.events
+
+        return pet_dict
