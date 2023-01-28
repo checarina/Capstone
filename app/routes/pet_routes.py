@@ -3,10 +3,19 @@ from app import db
 from app.models.Pet import Pet
 from datetime import datetime
 import requests
-import os
-from dotenv import load_dotenv
+# import os
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
-pet_bp = Blueprint("pet", __name__, url_prefix = "/pet")
+pets_bp = Blueprint("pets", __name__, url_prefix = "/pets")
 
+#CREATE new pet profile
+
+#READ all pet profiles
+
+#READ one pet profile
+
+#UPDATE pet profile
+
+#DELETE pet profile

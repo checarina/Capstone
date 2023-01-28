@@ -24,8 +24,8 @@ def create_app():
     from app.models.Pet import Pet
 
     # Register Blueprints here
-    from app.routes.pet_routes import pet_bp
-    app.register_blueprint(pet_bp)
+    from app.routes.pet_routes import pets_bp
+    app.register_blueprint(pets_bp)
     from app.routes.event_routes import events_bp
     app.register_blueprint(events_bp)
     
