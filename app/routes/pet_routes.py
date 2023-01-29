@@ -29,8 +29,20 @@ def create_profile():
 
     
 #READ all pet profiles
+@pets_bp.route("", methods = ["GET"])
+def get_all_pets():
+    pets = Pet.query.all()
+    pets_response = []
+    for pet in pets:
+        pets_response.append(pet.to_dict())
+    return make_response(jsonify(pets_response), 200)
 
 #READ one pet profile
+@pets_bp.route("<pet_id>", methods = ["GET"])
+def get_one_pet(pet_id):
+    pet = Pet.query.get(pet_id)
+    return make_response(jsonify(pet.to_dict()), 200)
+    
 
 #UPDATE pet profile
 
