@@ -53,12 +53,25 @@ def update_pet(pet_id):
     db.session.commit()
 
     return make_response(f"{pet.name}'s profile successfully updated.", 200)
-    
-    
+#wow ok that was trickier than I expected
+#didn't want to have to specify each and every attribute to be (potentially) updated, but also didn't want to create a new Pet object, with a new id
+# this way, only the attributes to be updated need to be included in the request, so even if the model changes the route doesn't need to    
     
     
 #DELETE pet profile
-# @pets_bp.route("<pet_id>", methods = ["DELETE"])
+@pets_bp.route("<pet_id>", methods = ["DELETE"])
+def delete_profile(pet_id): #can't bring myself to call it delete_pet lmao
+    pet = Pet.query.get(pet_id)
+    db.session.delete(pet)
+    db.session.commit()
+
+    return make_response(f"Profile for {pet.name} successfully deleted.", 200)
 
 #DELETE all pet profiles
-# @pets_bp.route("", methods = ["DELETE"])
+@pets_bp.route("", methods = ["DELETE"])
+def delete_all_profiles():
+    pets = Pet.query.all()
+    for pet in pets:
+        db.session.delete(pet)
+    db.session.commit()
+    return make_response("All profiles successfully deleted.", 200)
