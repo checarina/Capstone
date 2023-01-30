@@ -14,7 +14,7 @@ pets_bp = Blueprint("pets", __name__, url_prefix = "/pets")
 @pets_bp.route("", methods = ["POST"])
 def create_profile():
     request_body = request.get_json()
-    new_pet = Pet.from_dict( request_body)
+    new_pet = Pet.from_dict(request_body)
 
     # new_pet = Pet(
     #     name = request_body["name"],
@@ -26,7 +26,6 @@ def create_profile():
     return make_response(jsonify({
         "pet": new_pet.to_dict()
     }), 201)
-
     
 #READ all pet profiles
 @pets_bp.route("", methods = ["GET"])
@@ -43,7 +42,23 @@ def get_one_pet(pet_id):
     pet = Pet.query.get(pet_id)
     return make_response(jsonify(pet.to_dict()), 200)
     
-
 #UPDATE pet profile
+@pets_bp.route("<pet_id>", methods = ["PATCH"])
+def update_pet(pet_id):
+    request_body = request.get_json()
+    pet = Pet.query.get(pet_id)
+    for key, value in request_body.items():
+        setattr(pet, key, value)
+    
+    db.session.commit()
 
+    return make_response(f"{pet.name}'s profile successfully updated.", 200)
+    
+    
+    
+    
 #DELETE pet profile
+# @pets_bp.route("<pet_id>", methods = ["DELETE"])
+
+#DELETE all pet profiles
+# @pets_bp.route("", methods = ["DELETE"])
