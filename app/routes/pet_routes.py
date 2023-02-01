@@ -41,7 +41,10 @@ def get_all_pets():
 @pets_bp.route("<pet_id>", methods = ["GET"])
 def get_one_pet(pet_id):
     pet = Pet.query.get(pet_id)
-    return make_response(jsonify(pet.to_dict()), 200)
+    pet_events = []
+    for event in pet.events:
+        pet_events.append(event.to_dict())
+    return make_response(jsonify({"pet": pet.to_dict(), "events": pet_events}), 200)
     
 #UPDATE pet profile
 @pets_bp.route("<pet_id>", methods = ["PATCH"])

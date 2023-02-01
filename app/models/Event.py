@@ -1,4 +1,5 @@
 from app import db
+from datetime import datetime
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -10,10 +11,12 @@ class Event(db.Model):
     pet = db.relationship("Pet", back_populates = "events")
 
     @classmethod
-    def from_dict(cls, event_data):
+    def from_dict(cls, event_data, pet_id):
         new_event = Event(
             type = event_data["type"],
             notes = event_data["notes"],
+            timestamp = datetime.utcnow(),
+            pet_id = pet_id
 
         )
         return new_event

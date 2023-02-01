@@ -9,13 +9,13 @@ import requests
 
 # load_dotenv()
 
-events_bp = Blueprint("events", __name__, url_prefix = "/<pet_id>/events")
+events_bp = Blueprint("events", __name__, url_prefix = "/pets/<pet_id>/events")
 
 #CREATE new logged event
-@events_bp.route("", methods = ["CREATE"])
+@events_bp.route("", methods = ["POST"])
 def log_event(pet_id):
     request_body = request.get_json()
-    new_event = Event.from_dict(request_body)
+    new_event = Event.from_dict(request_body, pet_id)
     db.session.add(new_event)
     db.session.commit()
     return make_response(jsonify({"event": new_event.to_dict()}), 201)
