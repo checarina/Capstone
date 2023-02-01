@@ -10,6 +10,7 @@ import requests
 
 pets_bp = Blueprint("pets", __name__, url_prefix = "/pets")
 
+
 #CREATE new pet profile
 @pets_bp.route("", methods = ["POST"])
 def create_profile():

@@ -21,8 +21,8 @@ class Pet(db.Model):
             sex = pet_data["sex"],
             age = pet_data["age"],
             pic = pet_data["pic"],
-            details = pet_data["details"],
-            events = pet_data["events"]
+            details = pet_data["details"]
+            # events = pet_data["events"]
         )
         return new_pet
     
@@ -36,6 +36,6 @@ class Pet(db.Model):
         pet_dict["age"] = self.age
         pet_dict["pic"] = self.pic
         pet_dict["details"] = self.details
-        pet_dict["events"] = self.events
+        # pet_dict["events"] = self.events
 
         return pet_dict
