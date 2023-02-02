@@ -52,11 +52,29 @@ def update_event(pet_id, event_id):
     event = Event.query.get(event_id)
     event.type = request_body["type"]
     event.notes = request_body["notes"]
+    # event.timestamp #make time editable?
 
     db.session.commit()
     return make_response(jsonify({"updated:": event.to_dict()}), 200)
 
 #DELETE event
+@events_bp.route("/<event_id>", methods = ["DELETE"])
+def delete_event(pet_id, event_id):
+    # request_body = request.get_json()
+    # pet = Pet.query.get(pet_id)
+    event = Event.query.get(event_id)
 
-#DELETE all events (for one pet)?
+    db.session.delete(event)
+    db.session.commit()
 
+    return make_response(jsonify({"deleted": event.id}), 200)
+
+# #DELETE all events (for one pet)?
+@events_bp.route("", methods = ["DELETE"])
+def delete_all_events(pet_id):
+    pet = Pet.query.get(pet_id)
+    for event in pet.events:
+        db.session.delete(event)
+    db.session.commit()
+    return make_response(f"All events for {pet.name} deleted", 200)
+    # return make_response(jsonify({"All events for {pdeleted"}), 200)
