@@ -26,5 +26,6 @@ class Event(db.Model):
         event_dict["id"] = self.id
         event_dict["type"] = self.type
         event_dict["timestamp"] = self.timestamp
+        event_dict["notes"] = self.notes
 
         return event_dict

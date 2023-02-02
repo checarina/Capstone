@@ -1,6 +1,7 @@
 from flask import Blueprint, request, make_response, jsonify
 from app import db
 from app.models.Pet import Pet
+from app.routes.event_routes import read_all_events
 from datetime import datetime
 import requests
 # import os
@@ -41,9 +42,14 @@ def get_all_pets():
 @pets_bp.route("<pet_id>", methods = ["GET"])
 def get_one_pet(pet_id):
     pet = Pet.query.get(pet_id)
+    # pet_events = read_all_events(pet_id)
+
+    # turn below into a helper function?
     pet_events = []
     for event in pet.events:
         pet_events.append(event.to_dict())
+    ###
+    
     return make_response(jsonify({"pet": pet.to_dict(), "events": pet_events}), 200)
     
 #UPDATE pet profile
