@@ -20,26 +20,28 @@ def log_event(pet_id):
     db.session.commit()
     return make_response(jsonify({"event": new_event.to_dict()}), 201)
 
-#READ all logged events for one pet
-@events_bp.route("", methods = ["GET"])
-def read_all_events(pet_id):
-    pet = Pet.query.get(pet_id)
-    pet_events = []
-    for event in pet.events:
-        pet_events.append(event.to_dict())
-    return make_response(jsonify({f"Log for {pet.name}:": pet_events}), 200)
+# #READ all logged events for one pet
+# @events_bp.route("", methods = ["GET"])
+# def read_all_events(pet_id):
+#     pet = Pet.query.get(pet_id)
+#     pet_events = []
+#     for event in pet.events:
+#         pet_events.append(event.to_dict())
+#     return make_response(jsonify({f"Log for {pet.name}:": pet_events}), 200)
 
 #READ logged events for one pet filtered by search query
 #getting ambitious here
-@events_bp.route("/search", methods = ["GET"])
-def filter_events(pet_id, query):
+@events_bp.route("", methods = ["GET"])
+def filter_events(pet_id):
     query = request.args.get("query")
-    # pet = Pet.query.get(pet_id)
-    query_results = Event.query.filter_by(pet_id = pet_id, type = query)
+    if query is None:
+        query_results = Event.query.filter_by(pet_id = pet_id)
+    else:
+        query_results = Event.query.filter_by(pet_id = pet_id, type = query)
     events_result = []
     for event in query_results:
         events_result.append(event.to_dict())
-    return make_response(jsonify({f"{query} events for {pet_id}:": events_result}), 200) #why is this not working
+    return make_response(jsonify({f"Search results:": events_result}), 200)
 
 
 #UPDATE specific logged event
@@ -52,7 +54,7 @@ def update_event(pet_id, event_id):
     event.notes = request_body["notes"]
 
     db.session.commit()
-    return make_response("update successful", 200)
+    return make_response(jsonify({"updated:": event.to_dict()}), 200)
 
 #DELETE event
 

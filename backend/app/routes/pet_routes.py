@@ -1,7 +1,7 @@
 from flask import Blueprint, request, make_response, jsonify
 from app import db
 from app.models.Pet import Pet
-from app.routes.event_routes import read_all_events
+# from app.routes.event_routes import read_all_events
 from datetime import datetime
 import requests
 # import os
